@@ -89,4 +89,8 @@ exit3:
     
     # exit cleanly
     addi a0, x0, 10
+<<<<<<< HEAD
     ecall
+=======
+    ecall
+>>>>>>> refs/remotes/origin/main
