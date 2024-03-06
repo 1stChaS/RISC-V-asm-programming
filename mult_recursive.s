@@ -27,34 +27,48 @@ main:
     addi a0, x0, 10
     ecall
 
-    
+    j exit
+
+
 mult:
+    addi sp, sp,  -4
+    sw a0, 4(sp)  # storing the a value on to the stack
+    sw ra, 0(sp)  # storing the ra value on to the stack
+
     # base case
     # compare a1 with 1, if the two are equal you exit the mul function
     addi t0, x0, 1 # 1
-    beq a1, t0, exit_base_case
+    bne a1, t0, exit_base_case
     
     
     # recursive case
     addi sp, sp,  -4
-    sw ra, 0(sp)  # storing the ra value on to the stack
+    jr ra 
     
+     
+    
+exit_base_case:
+
     # mult(a, b-1);
-    addi sp, sp, -4
-    sw a0, 0(sp)
-    addi a1, a1, -1
+    addi a1, a1, -1  # b-1
     j mult
     
     # a + mult(a, b-1);
     mv t1, a0
     lw a0, 0(sp)
+    lw t1, 4(sp)
+    lw ra, 0(sp)
     addi sp, sp, 4
     add a0, a0, t1
     
     lw ra, 0(sp)
     addi sp, sp, 4
-    jr ra
-     
     
-exit_base_case:
     jr ra
+
+
+
+exit:
+    addi a0, x0, 10
+    ecall
+
